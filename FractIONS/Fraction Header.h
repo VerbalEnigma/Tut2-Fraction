@@ -6,10 +6,10 @@ private:
 	int denominator;
 public:
 	Fraction(int, int);//Construtor
-	Fraction add(Fraction);
-	Fraction subtract(Fraction);
-	Fraction multiply(Fraction);
-	Fraction divide(Fraction);
+	Fraction operator+(const Fraction& another);
+	Fraction operator-(const Fraction& another);
+	Fraction operator*(const Fraction& another);
+	Fraction operator/(const Fraction& another);
 	void getNumDenom();
 	void setNumDenom(int, int);
 	void print();

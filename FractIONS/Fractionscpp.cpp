@@ -1,68 +1,106 @@
-//class fraction source code 
 #include "Fraction header.h"
+#include <iostream>
 #include <iostream>
 using namespace std;
 Fraction::Fraction(int numerator = 0, int denominator = 1) :
 numerator(numerator), denominator(denominator) {}
-Fraction Fraction::add(Fraction another)
+Fraction Fraction::operator+(const Fraction& another)
 {
-	this->numerator = numerator*another.denominator + another.numerator*denominator;
-	this->denominator = denominator *another.denominator;
-	return(Fraction(numerator, denominator));
+	Fraction result;
+	result.numerator = numerator*another.denominator + another.numerator*denominator;
+	result.denominator = denominator *another.denominator;
+	return(result);
 }
-Fraction Fraction::subtract(Fraction another)
+Fraction Fraction::operator-(const Fraction& another)
 {
-	if (this->numerator == another.numerator && this->denominator == another.denominator)
-		this->numerator = 0;
+	Fraction result;
+	if (numerator == another.numerator && denominator == another.denominator)
+		result.numerator = 0;//This makes resultant numerator zero
 	else
 	{
-		this->numerator = numerator*another.denominator - another.numerator*denominator;
-		this->denominator = denominator *another.denominator;
+		result.numerator = numerator*another.denominator - another.numerator*denominator;
+		result.denominator = denominator *another.denominator;
 	}
-	return(Fraction(numerator, denominator));
+	return(result);
 }
-Fraction Fraction::multiply(Fraction another)
+Fraction Fraction::operator*(const Fraction& another)
 {
-	this->numerator = numerator * another.numerator;
-	this->denominator = denominator * another.denominator;
-	return(Fraction(numerator, denominator));
+	Fraction result;
+	result.numerator = numerator * another.numerator;
+	result.denominator = denominator * another.denominator;
+	return(result);
 }
-Fraction Fraction::divide(Fraction another)
+Fraction Fraction::operator/(const Fraction& another)
 {
+	Fraction result;
 	this->numerator = numerator* another.denominator;
 	this->denominator = denominator *another.numerator;
-	return(Fraction(numerator, denominator));
+	return(result);
 }
 void Fraction::getNumDenom()
 {
-	this->numerator = numerator;
-	this->denominator = denominator;
+	Fraction result;
+	result.numerator = numerator;
+	result.denominator = denominator;
+
 }
 void Fraction::setNumDenom(int num, int denom)
 {
-	this->numerator = num;
-	this->denominator = denom;
+	numerator = num;
+	denominator = denom;
 }
 void Fraction::print()
 {
-	if (this->numerator == 0)
-		cout << "0" << endl;
-	else
+	int wholeNumber = 0;//whole of mixed fraction 
+	int i = 1;
+
+	while (numerator>denominator)
+	{
+		if ((numerator - denominator*i)>0)
+		{
+
+			numerator = numerator - denominator;//keeping track of the decreasing numerator
+			wholeNumber = wholeNumber + 1;
+			i++;
+		}
+		else
+			break;
+	}
+
+	if (numerator == denominator)
+	{
+		wholeNumber = 1;
+		cout << wholeNumber << endl;
+	}
+	else if (wholeNumber == 0)
+	{
 		cout << numerator << "/" << denominator << endl;
+	}
+	else
+	{
+		cout << wholeNumber << " " << numerator << "/" << denominator << endl;
+	}
+
 }
 int main()
 {
 	Fraction f1(4, 5);
 	Fraction  f2(7, 8);
+	Fraction  Result;
+	Fraction f3;
 
 	f1.print();
-	f1.add(f1).print();
-	f1.add(f2).print();
-	f1.subtract(f1);
-	f1.print();
-
+	Result = f1 + f2;
+	Result.print();
+	Result = f1 - f2;
+	Result.print();
+	f3.setNumDenom(3, 5);
 	f1.setNumDenom(23, 34);
-	f1.multiply(f2);
-	f2.getNumDenom();//Problem what exactly is suppose to happen here since im retuerning two numbers intseatd of one 
+	f1.print();
+	Result = f3*f2;
+	Result.print();
+	Result = f2 / f3;
+	Result.print();
+	f2.getNumDenom();//Problem what exactly is suppose to happen here since im returning two numbers intseatd of one 
 
 }
